@@ -10,20 +10,27 @@ using namespace std;
 /*
 Find out the minimum k elements in the array and put them in the head of the
 array.
+quick select algoritm:
 Use a pivot similar in qsort to divide the array into two subarray, Sa, Sb.
 If k < |Sa|, then the k-th min element is in Sa;
 if k = |Sa| + 1, then the k-th min element is the pivot;
 if k > |Sa| + 1, then the k-th min element is the (k-|Sa|-1)-th element in Sb.
-Complexity = O(n)
+Complexity = O(n).
+args
+arr the array to select the min elements;
+n   length of the array;
+k   the number of min elements to select.
 */
-void qselect(int*arr, int n, int k) 
+template <typename T>
+void qselect(T*arr, int n, int k) 
 {
     if (n < 1 || k < 0 || k >= n)
     {
         return; // invalid params or no need to cal when k == n.
     }
 
-    int i, j, ix, pivot;
+    T pivot;
+    int i, j, ix;
     ix      = rand() % n; // randomly choose a elem as the pivot.
     pivot   = arr[ix];    // extract the pivot
     arr[ix] = arr[0];     // move arr[0] to arr[ix], and treat arr[0] empty.
@@ -67,7 +74,7 @@ void test()
     cout << endl;
 
     qselect(arr, N, k);
-    printf("The selected %d minimum elmement \n"\
+    printf("\nThe selected %d minimum elmement \n"\
         "are move to the head of the array:\n", k);
     for (int i = 0; i < N; ++i)
     {
