@@ -13,13 +13,23 @@ Print elements of an array in a line.
 msg  the message describing the array to print;
 list head address of the array;
 n    length of the array.
+reverse: print the array reversly.
 */
-void print_list(string msg, int *list, int n)
+void print_list(string msg, int *list, int n, bool reverse=false)
 {
     cout << msg << endl;
-    for (int i = 0; i < n; ++i)
-        cout << list[i] << " ";
-    cout << endl;
+    if (! reverse)
+    {
+        for (int i = 0; i < n; ++i)
+            cout << list[i] << " ";
+        cout << endl;
+    }
+    else
+    {
+        for (int i = n-1; i >= 0; --i)
+            cout << list[i] << " ";
+        cout << endl;   
+    }
 }
 
 // TODO still need to perfect the output format.
