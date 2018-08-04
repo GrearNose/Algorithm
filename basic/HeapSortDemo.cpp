@@ -94,7 +94,7 @@ or smaller (min heap) than their left and/or right childrens. Sort the array
 by firstly converting it into a max heap and then repeatly reduce the heap by
 moving(swapping) the top node(max one in the heap) to the last node at the
 bottom of the heap, exclude it from the heap and adjust the heap into a max
-heap.
+heap. complexity = O(nlog(k)).
 === args ===
 heap  head address of the array;
 n     length of the array.

@@ -65,7 +65,7 @@ A heap which is a binary tree whose non-leaf nodes are always larger (max heap)
 or smaller (min heap) than their left and/or right childrens. Build a max heap
 of k element from the first k elements in the array, and for each element from
 the rest part of the array, replace that element with the top of the heap if
-the element is smaller than the top.
+the element is smaller than the top. complexity = O(nlog(k)).
 === args ===
 arr   head address of the array;
 n     length of the array;
