@@ -60,7 +60,8 @@ void adjust_heap(int * heap, const int ix, int n)
 
 
 /*
-Find out the first k minimum elements in a array by using a max heap.
+Find out the first k minimum elements in a array and put them in the head of
+the array by using a max heap.
 A heap which is a binary tree whose non-leaf nodes are always larger (max heap)
 or smaller (min heap) than their left and/or right childrens. Build a max heap
 of k element from the first k elements in the array, and for each element from
