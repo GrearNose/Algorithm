@@ -12,27 +12,17 @@ by enumerating all possible combinitons, complexity o(2^n),
 when n is large (e.g. n > 48), it's infeasible to do so.
 */
 template <typename T>
-bool has_a_sum_enumerate(T*arr, unsigned len, int sum, vector<int> &nums, int depth=0)
+bool has_a_sum_enumerate(T*arr, unsigned len, int sum)
 {
     if( len < 1)
         return false;
     // choose arr[0]
-    nums.push_back(arr[0]);
-    sum -= arr[0];
-    if (sum == 0)
-    {
-        cout << "depth = " << depth << ": ";
-        for (unsigned i = 0; i < nums.size(); ++i)
-            cout << nums[i] << " ";
-        cout << endl;
+    if (sum-arr[0] == 0)
         return true;
-    }
-    else if (has_a_sum(arr+1, len-1, sum, nums, depth+1))
+    else if (has_a_sum_enumerate(arr+1, len-1, sum-arr[0]))
         return true;
-    // not choose arr[0]
-    nums.pop_back();
-    sum += arr[0];
-    if(has_a_sum(arr+1, len-1, sum, nums, depth+1))
+    // not choose ar[0]
+    if(has_a_sum_enumerate(arr+1, len-1, sum))
         return true;
     return false;
 }
@@ -52,7 +42,7 @@ void test()
     }
 
     cout << endl << "sum: " << sum << endl;
-    if (has_a_sum(arr,N,sum, nums))
+    if (has_a_sum_enumerate(arr,N,sum))//, nums))
         cout << "correct !" << endl;
     else
         cout << "Wrong!" << endl;
