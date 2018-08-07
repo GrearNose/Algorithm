@@ -35,7 +35,6 @@ void find_two_num_with_a_sum(T*arr,int len, T sum, vector<pair<int,int>>*pair_in
             {
                 for(ix2 = j; arr[j] == arr[ix2]; --ix2)
                 {
-
                     p.first  = i;
                     p.second = j;
                     pair_indices->push_back(p);
