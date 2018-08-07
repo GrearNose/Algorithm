@@ -7,8 +7,27 @@
 using namespace std;
 
 /*
-In an ascendingly sorted array, there may be some pairs of elements summing up to a
-certain num, find out all these pairs of elements.
+In an ascendingly sorted array, there may be some pairs of elements summing up
+to a certain num, find out all these pairs of elements. The algorithm is uses
+two pointers to search from two ends of the array toward the middle, during
+which the key is how to update the pointers:
+for briefness, assume we use two subscript variables i and j instead of pointers,
+i starts from the left end, and j starts from the right end of the array, there
+are 3 cases to consider:
+   1. arr[i] + arr[j] < sum, it means that these two elements are too small,
+      we need to increase i to get a larger pair, such that we may get closer
+      or find the pair exactly sum up to the given sum;
+   2. arr[i] + arr[j] > sum, it means that they are two large, we need to
+      decrease j to get a smaller pair;
+   3. arr[i] + arr[j] == sum, then one pair has been found. Be careful that
+      there may be some other elements equal to them, then they can make a pair,
+      and we need to find out all these pairs. In this case, we can use two
+      loop to find out all these pairs, one iterates through all the elements
+      equal to arr[i] (including arr[i]), and the other arr[j](including arr[j]).
+complexity: in normal case, when the number of duplicate pairs that add up to the 
+  given sum is very small, the time complexity is o(n), in the worse case when
+  all elements in the array are equal, then there are n*(n-1) pairs, then the
+  complexity is o(n^2)
 args
 arr: the head address of the array to search, sorted ascendingly;
 len: length of the array to search.
