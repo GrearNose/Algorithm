@@ -11,8 +11,7 @@ In an ascendingly sorted array, there may be some pairs of elements summing up t
 certain num, find out all these pairs of elements.
 args
 arr: the head address of the array to search, sorted ascendingly;
-start: starting index of the range of the array to search;
-end: ending index of the range of the array to search;
+len: length of the array to search.
 sum: sum of the two num fo search.
 pair_indices: a vector to record the indices of all the possible pairs of such num.
 */
