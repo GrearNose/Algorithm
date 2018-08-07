@@ -1,52 +1,70 @@
 #include <algorithm>
 #include <ctime>
+#include <vector>
 #include <iostream>
-#define N 23
+
+#define N 13
 using namespace std;
 
 /*
-Find out two num in an ascendingly sorted array that will sum up to a given num.
+In an ascendingly sorted array, there may be some pairs of elements summing up to a
+certain num, find out all these pairs of elements.
 args
 arr: the head address of the array to search, sorted ascendingly;
-len: length of the array;
+start: starting index of the range of the array to search;
+end: ending index of the range of the array to search;
 sum: sum of the two num fo search.
+pair_indices: a vector to record the indices of all the possible pairs of such num.
 */
 template <typename T>
-bool find_two_num_with_a_sum(T*arr,int len, T sum, int &n1, int &n2)
+void find_two_num_with_a_sum(T*arr,int len, T sum, vector<pair<int,int>>*pair_indices)
 {
-    if (NULL == arr or 0 == len)
-        return false;
+    // cout << "len: " << len << endl;
+    if (NULL == arr or len < 1 or NULL == pair_indices)
+        return ;
 
     int i, j;
+    pair<int,int> p;
     for(i = 0, j = len-1; i < j; )
     {
         T s = arr[i] + arr[j];
         if (s == sum)
         {
-            n1 = i;
-            n2 = j;
-            return true;
+            int ix1, ix2;
+            for(ix1 = i; arr[i] == arr[ix1]; ++ix1)
+            {
+                for(ix2 = j; arr[j] == arr[ix2]; --ix2)
+                {
+
+                    p.first  = i;
+                    p.second = j;
+                    pair_indices->push_back(p);
+                    // printf("found at (%d,%d)\n", i,j);
+                }
+            }
+	    i = ix1;
+	    j = ix2;
         }
         else if(s < sum)
-            ++i;
+            ++ i;
         else // s > sum
-            --j;
+            -- j;
     }
-    return false;
 }
 
 void test()
 {
-    int i, j, arr[N], mx = 33;
+    unsigned i, j, arr[N], mx = 33;
+    vector<pair<int,int>> pair_indices;
     srand(time(NULL));
-    cout << "arr: ";
     for (i = 0; i < N; ++i)
-    {
         arr[i] = rand() % mx;
-        cout << arr[i] << " ";
-    }
 
     sort(arr,arr+N);
+
+    cout << "arr: ";
+    for (i = 0; i < N; ++i)
+        cout << arr[i] << " ";
 
     i = j = 0;
     while(i == j)
@@ -54,20 +72,31 @@ void test()
         i = rand() % N;
         j = rand() % N;
     }
+    unsigned sum = arr[i] + arr[j];
+    printf("\nsum: %d = %d + %d\n", sum, arr[i], arr[j]);
+    find_two_num_with_a_sum(arr, N, arr[i] + arr[j], &pair_indices);
 
-    int ix1, ix2;
-    ix1 = ix2 = 0;
-    printf("\nsum: %d\n", arr[i] + arr[j]);
-    find_two_num_with_a_sum(arr, N, arr[i] + arr[j], ix1, ix2);
-
-    if (arr[ix1] + arr[ix2] == arr[i] + arr[j])
+    if(pair_indices.size() > 0)
     {
-        cout << "correct!" << endl;
+        printf("Found %lu pairs: ", pair_indices.size());
+        for (i = 0; i < pair_indices.size(); ++i)
+        {
+            pair<int,int> p;
+            p = pair_indices[i];
+            int ix1 = p.first;
+            int ix2 = p.second;
+            if (sum != arr[ix1] + arr[ix2])
+            {
+                printf("Incorrect pair: (%d,%d)\n", ix1, ix2);
+                continue;
+            }
+            printf("(%u,%u) ", arr[ix1], arr[ix2]);
+        }
+        cout << endl;
     }
     else
     {
-        printf("Wrong!\n");
-        printf("ix correct vs found: (%d,%d) vs (%d,%d)\n", i,j,ix1,ix2);
+        printf("Wrong! Found none !\n");
     }
 }
 
