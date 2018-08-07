@@ -35,7 +35,7 @@ sum: sum of the two num fo search.
 pair_indices: a vector to record the indices of all the possible pairs of such num.
 */
 template <typename T>
-void find_two_num_with_a_sum(T*arr,int len, T sum, vector<pair<int,int>>*pair_indices)
+void find_two_nums_with_a_sum(T*arr,int len, T sum, vector<pair<int,int>>*pair_indices)
 {
     // cout << "len: " << len << endl;
     if (NULL == arr or len < 1 or NULL == pair_indices)
