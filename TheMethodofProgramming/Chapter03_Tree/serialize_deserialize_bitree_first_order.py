@@ -57,7 +57,7 @@ def deserialze_bitree_first_order(s):
     root.right,s = deserialze_bitree_first_order(s)
     return root,s
 
-def reconstruct_tree_first_in(FirstAndIn):
+def reconstruct_tree_first_in_order(FirstAndIn):
     """reconstruct a binary tree from first and in order traversal sequences."""
     if 0 == len(FirstAndIn[0]): return
     First,In = FirstAndIn
@@ -68,8 +68,8 @@ def reconstruct_tree_first_in(FirstAndIn):
     left       = (First[1:ix+1], In[:ix])  # lchild subtree
     right      = (First[ix+1:], In[ix+1:]) # rchild subtree
     root       = Node(d)
-    root.left  = reconstruct_tree_first_in(left)
-    root.right = reconstruct_tree_first_in(right)
+    root.left  = reconstruct_tree_first_in_order(left)
+    root.right = reconstruct_tree_first_in_order(right)
     return root
 
 def test():
@@ -77,7 +77,7 @@ def test():
     last_order  = [7,4,2,5,8,6,3,1]
     in_order    = [4,7,2,1,5,3,8,6]
 
-    tree = reconstruct_tree_first_in([first_order,in_order])
+    tree = reconstruct_tree_first_in_order([first_order,in_order])
     print('The original tree:')
     print_tree_horizontally(tree)
     s = serialize_bitree_first_order(tree)
