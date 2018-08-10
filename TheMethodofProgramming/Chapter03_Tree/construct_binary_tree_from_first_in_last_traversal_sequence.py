@@ -5,7 +5,7 @@ class Node:
       self.left   = None
       self.right = None
 
-def print_tree(root, depth=0, isleft=None):
+def print_tree_horizontally(root, depth=0, isleft=None):
     """ Print a binary tree. 
         root: the root node of the binary tree;
         depth: the depth of current node;
@@ -25,8 +25,8 @@ def print_tree(root, depth=0, isleft=None):
         print('rt:', end='')
 
     print(root.data)
-    print_tree(root.left,depth+1, True)
-    print_tree(root.right,depth+1,False)
+    print_tree_horizontally(root.left,depth+1, True)
+    print_tree_horizontally(root.right,depth+1,False)
 
 
 def reconstruct_tree_first_in(FirstAndIn):
@@ -67,11 +67,11 @@ def test():
 
     tree1 = reconstruct_tree_first_in([first_order,in_order])
     print('tree1 contructed from first and in order traversal sequence:')
-    print_tree(tree1)
+    print_tree_horizontally(tree1)
 
     tree2 = reconstruct_tree_last_in([last_order,in_order])
     print('tree2 contructed from last and in order traversal sequence:')
-    print_tree(tree2)
+    print_tree_horizontally(tree2)
 
     print('Done!')
 
