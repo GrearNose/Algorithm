@@ -5,7 +5,7 @@ class Node:
       self.left   = None
       self.right = None
 
-def print_tree_horizontally(root, depth=0, isleft=None):
+def print_bitree_horizontally(root, depth=0, isleft=None):
     """ Print a binary tree layer by layer horizontally.
         root: the root node of the binary tree;
         depth: the depth of current node;
@@ -25,8 +25,8 @@ def print_tree_horizontally(root, depth=0, isleft=None):
     #     print('rt:', end='')
 
     print(root.data)
-    print_tree_horizontally(root.left,depth+1, True)
-    print_tree_horizontally(root.right,depth+1,False)
+    print_bitree_horizontally(root.left,depth+1, True)
+    print_bitree_horizontally(root.right,depth+1,False)
 
 def serialize_bitree_first_order(root):
     """Serialze a binary tree into a string in first order,
@@ -57,7 +57,7 @@ def deserialze_bitree_first_order(s):
     root.right,s = deserialze_bitree_first_order(s)
     return root,s
 
-def reconstruct_tree_first_in_order(FirstAndIn):
+def reconstruct_bitree_first_in_order(FirstAndIn):
     """reconstruct a binary tree from first and in order traversal sequences."""
     if 0 == len(FirstAndIn[0]): return
     First,In = FirstAndIn
@@ -68,8 +68,8 @@ def reconstruct_tree_first_in_order(FirstAndIn):
     left       = (First[1:ix+1], In[:ix])  # lchild subtree
     right      = (First[ix+1:], In[ix+1:]) # rchild subtree
     root       = Node(d)
-    root.left  = reconstruct_tree_first_in_order(left)
-    root.right = reconstruct_tree_first_in_order(right)
+    root.left  = reconstruct_bitree_first_in_order(left)
+    root.right = reconstruct_bitree_first_in_order(right)
     return root
 
 def test():
@@ -77,20 +77,20 @@ def test():
     last_order  = [7,4,2,5,8,6,3,1]
     in_order    = [4,7,2,1,5,3,8,6]
 
-    tree = reconstruct_tree_first_in_order([first_order,in_order])
+    tree = reconstruct_bitree_first_in_order([first_order,in_order])
     print('The original tree:')
-    print_tree_horizontally(tree)
+    print_bitree_horizontally(tree)
     s = serialize_bitree_first_order(tree)
     print('serialized str: ', s)
     tree2,_ = deserialze_bitree_first_order(s)
     print('construct the bitree by deserialzing the str:')
-    print_tree_horizontally(tree2)
+    print_bitree_horizontally(tree2)
 
     s = '12!3!#!#!#!'
     print('another test data for deserialze_bitree_first_order: ', s)
     tree3,_ = deserialze_bitree_first_order(s)
     print('the tree:')
-    print_tree_horizontally(tree3)
+    print_bitree_horizontally(tree3)
     print('Done!')
 
 if __name__ == '__main__':
