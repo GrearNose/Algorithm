@@ -53,7 +53,7 @@ branch: a bool array to record the branches to print;
 item_width: output width of each node.
 */
 template <typename TreeNode>
-void print_tree(TreeNode *root, void (*print_func)(TreeNode*),\
+void print_tree_horizontally(TreeNode *root, void (*print_func)(TreeNode*),\
                  int depth, bool branch[], int item_width = 3)
 {
     if(NULL == root)
