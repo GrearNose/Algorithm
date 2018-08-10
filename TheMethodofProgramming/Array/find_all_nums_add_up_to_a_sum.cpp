@@ -3,7 +3,7 @@
 #include <cassert>
 #include <vector>
 #include <iostream>
-#define N 7
+#define N 25
 using namespace  std;
 
 /*
@@ -16,6 +16,10 @@ void sum_of_k_nums(T*arr, unsigned len, int sum, vector<int> &nums, int depth=0)
 {
     if( len < 1)
         return;
+    static long cnt = 0;
+    ++cnt;
+    if (0 == cnt % 1000)
+        printf("cnt: %ld\n", cnt);
     // choose arr[0]
     nums.push_back(arr[0]);
     sum -= arr[0];
