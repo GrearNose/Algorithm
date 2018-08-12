@@ -32,8 +32,9 @@
 *.app
 
 # binary dirs
-basic/build/*
-TheMethodofProgramming/Chapter01_String/build/*
-TheMethodofProgramming/Chapter03_Tree/build/*
-TheMethodofProgramming/List/build/*
-TheMethodofProgramming/Array/build/*
+Basic/build/*
+Array/build/*
+List/build/*
+Matrix/build/*
+String/build/*
+Tree/build/*
