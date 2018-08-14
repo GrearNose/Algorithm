@@ -14,7 +14,6 @@ def lis(arr):
     subLIS = {1:[arr[0]]} # initialized with the first elem of arr.
     for i in range(1,len(arr)): # go through arr, and update B and subLIS.
         x = arr[i] # fetch the current elem.
-
         # x is larger than the last elem of the current longest LIS of arr[0,.,i],
         # then append x to the tail of this LIS, and make a copy to subLIS.
         if x > B[-1]:
@@ -22,7 +21,6 @@ def lis(arr):
             B.append(x)
             tmp.append(x)
             subLIS[len(B)] = tmp # copy the current longest LIS of arr[0,.,i].
-
         # x is  smaller than the first elem in B, i.e. found a subsequence
         # of lenght with a smaller ending element, then update both B[0]
         # and subLIS[1]
