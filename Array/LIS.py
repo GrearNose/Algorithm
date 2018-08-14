@@ -64,7 +64,11 @@ def lis(arr):
                 # update the corresponding subsequence in the subLIS.
                 subLIS[ix+1][-1] = x
 
-    return B,subLIS[list(subLIS.keys())[-1]]
+    # extract the longest LIS.
+    mxLen = list(subLIS.keys())[-1]
+    subLIS = subLIS[mxLen]
+
+    return B,subLIS
 
 def test():
     arr = [[2, 1, 5, 3, 6, 4, 8 ,9, 7],\
