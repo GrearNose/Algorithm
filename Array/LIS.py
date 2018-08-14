@@ -62,6 +62,7 @@ def lis(arr):
                 # B[ix] is the ending elem of the sequence of length ix+1.
                 B[ix] = x
                 # update the corresponding subsequence in the subLIS.
+                # N.B. subLIS[ix+1] is the LIS of length ix+1.
                 subLIS[ix+1][-1] = x
 
     # extract the longest LIS.
