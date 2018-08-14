@@ -10,7 +10,7 @@ template <typename T>
 void print_arr(const T *arr, int len, const string &msg);
 
 /*
-get the lIS(longest Increasing Subsequence) of an given array,
+get the LIS(longest Increasing Subsequence) of an given array,
 using a DP algorithm with complexity of o(nlogn).
 Args:
 arr: the array to find the LIS;
