@@ -17,7 +17,9 @@ def lis(arr):
         # x is larger than the last elem of the current longest LIS of arr[0,.,i],
         # then append x to the tail of this LIS, and make a copy to subLIS.
         if x > B[-1]:
-            cpy = subLIS[len(B)].copy() # use copy, not reference.
+            # use copy, not reference, and must copy it before the appending,
+            # otherwise subLIS[len(B)] wound not exist.
+            cpy = subLIS[len(B)].copy()
             B.append(x)
             cpy.append(x)
             subLIS[len(B)] = cpy # copy the current longest LIS of arr[0,.,i].
