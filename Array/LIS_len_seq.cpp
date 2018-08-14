@@ -12,6 +12,9 @@ void print_arr(const T *arr, int len, const string &msg);
 /*
 get the lIS(longest Increasing Subsequence) of an given array,
 using a DP algorithm with complexity of o(nlogn).
+Args:
+arr: the array to find the LIS;
+seq_LIS: a vector the get the LIS found by this func, if needed.
 */
 template <typename T>
 int LIS(T*arr, int len, vector<T>* const seq_LIS=NULL)
@@ -112,7 +115,9 @@ int LIS(T*arr, int len, vector<T>* const seq_LIS=NULL)
         #endif
         if (mxlen > 0)
         {
+            // write the longest LIS.
             *seq_LIS = *(*subLIS)[mxlen-1];
+            // free the memory of the elem held in subLIS.
             for (int i = mxlen; i > 0 ; --i)
             {
                 delete((*subLIS)[i-1]);
