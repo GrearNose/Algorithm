@@ -52,7 +52,7 @@ def lis(arr):
                 else: 
                     ix = mid
                     break
-            # not B[ix]==x is found, then l >= h, thus B[l] > x,
+            # No B[ix]==x is found, then l >= h, thus B[l] > x,
             # B[l] is the smallest elem in B larger than x.
             if None == ix:
                 ix = l
