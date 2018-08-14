@@ -3,17 +3,21 @@ def lis(arr):
     """ Find out the LIS(longest increasing subsequence) of an array."""
     if arr == None or not isinstance(arr, (list,tuple)) or len(arr) == 0:
         return None
-    # B is an auxiliary array, and B[ix] records the smallest ending element
-    # of the sequence of length ix+1, found the traversal through the given
-    # array arr.
+
+    # B is an auxiliary array used in this DP algorithm, and B[ix] records
+    # the smallest ending element of the sequence of length ix+1, found
+    # during the traversal through the given array arr.
     B = [arr[0]] # initialized with the first elem of arr.
-    # subLIS a map to record the sequence with the smallest ending found currently.
+
+    # subLIS a map to record the sequence with the smallest ending found
+    # currently.
     # key: the len of LIS, value: the LIS.
     # N.B. not need to use it when only the length of LIS is required,
     # but not the sequence.
     subLIS = {1:[arr[0]]} # initialized with the first elem of arr.
     for i in range(1,len(arr)): # go through arr, and update B and subLIS.
         x = arr[i] # fetch the current elem.
+
         # x is larger than the last elem of the current longest LIS of arr[0,.,i],
         # then append x to the tail of this LIS, and make a copy to subLIS.
         if x > B[-1]:
@@ -23,12 +27,14 @@ def lis(arr):
             B.append(x)
             cpy.append(x)
             subLIS[len(B)] = cpy # copy the current longest LIS of arr[0,.,i].
+
         # x is  smaller than the first elem in B, i.e. found a subsequence
         # of lenght with a smaller ending element, then update both B[0]
-        # and subLIS[1]
+        # and subLIS[1].
         elif x < B[0]:
             B[0] = x
             subLIS[1] = [x]
+
         # there must be an ix such that B[ix] <= x < B[ix+1],
         # find it by using bisearch. 
         elif B[0] < x and x < B[-1]:
