@@ -1,6 +1,8 @@
 
 def lis(arr):
-    """ Find out the LIS(longest increasing subsequence) of an array."""
+    """ Find out the LIS(longest increasing subsequence) of an array,
+        using a DP algorithm with complexity of o(nlogn).
+    """
     if arr == None or not isinstance(arr, (list,tuple)) or len(arr) == 0:
         return None
 
@@ -43,7 +45,9 @@ def lis(arr):
             # length ix+1 by replacing its last elem with x.
             ix = None
             l,h = 0,len(B)-1
-            while l < h:
+            # compare until l > h.
+            # N.B. when l==h, x > B[l], then the pos ix should be l+1.
+            while l <= h:
                 mid = (l+h) >> 1 # i.e. mid = (l+h) // 2
                 if x < B[mid]:
                     h = mid - 1
@@ -73,7 +77,8 @@ def lis(arr):
 
 def test():
     arr = [[2, 1, 5, 3, 6, 4, 8 ,9, 7],\
-            [2,3,5,2,1,7,3,8,5,9]]
+            [2, 3, 5, 2, 1, 7, 3, 8, 5, 9],
+            [10, 17, 4, 19, 14, 2, 10, 6, 17, 10]]
     for a in arr:
         B,LIS = lis(a)
         print('arr:',a)
