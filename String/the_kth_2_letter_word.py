@@ -57,17 +57,22 @@ def the_kth_2_letter_word(two_letters, n1, n2, k, C=None,dbg=False):
         # 0 < k < C(n-1,m-1)
         # then the ix-th letter is two_letters[0],
         # and the k-th word is smaller than the C(n-1,m-1)-th word.
-        # It's equal to find the k-th word of length n-1, consisting
-        # of m-1 two_letters[0] and n-(m-1) two_letters[1].
+        # It's equivalent to find the k-th word of length n-1, consisting
+        # of m-1 two_letters[0] and (n-1)-(m-1) two_letters[1].
         if m == 1 or k < C[n-1][m-1]:
+            # now this part of the word consists of 1 two_letters[0]
+            # and n-1 two_letters[1], so the k-th word in alphat order
+            # is the word with one two_letters[0] at pos k-1, and the
+            # rest are two_letters[1].
             if m == 1:
                 word[ix:] = [1] * n
                 word[ix+k-1] = 0
                 break
-            word[ix] = 0 # record the index of two_letters[0].
-            ix += 1
-            n -= 1   # length of the rest part of the word to find.
-            m -= 1   # num of letters[0]
+            else:
+                word[ix] = 0 # record the index of two_letters[0].
+                ix += 1
+                n -= 1   # length of the rest part of the word to find.
+                m -= 1   # num of letters[0]
 
         # C(n-1,m-1) < k < C(n,m)
         # then the ix-th letter is two_letters[1],
