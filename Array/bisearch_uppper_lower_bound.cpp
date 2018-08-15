@@ -111,7 +111,10 @@ int lower_bound(const T1 arr, int len, const T2 val)
     // arr[h] >= val.
     // thus now, arr[h] < val <= arr[h+1], and arr[h+1] is the
     // (first if more than one) greatest lower bound.
-    return h + 1;
+    if (arr[h+1] == val)
+        return h + 1; // arr[h+1] is the first one of the greatest lower bound.
+    else             // N.B. in this case, arr[l] == arr[h] < x < arr[h+1]
+        return h;    // arr[h] is the greatest lower bound.
 }
 
 
@@ -155,7 +158,10 @@ int upper_bound(const T1 arr, int len, const T2 val)
     }
     // now l == h, arr[l-1] <= x < arr[l], arr[l-1] is
     // the last one satisfying the lower bound condition.
-    return l-1;
+    if (arr[l-1] == val) // arr[l-1] is the last one in the least upper bound.
+        return l-1;
+    else           // N.B. arr[l-1] < x < arr[l], 
+        return l;  // arr[l] is the least upper bound.
 }
 
 
@@ -229,14 +235,14 @@ void test()
         cout << arr[i] << " ";
     cout << endl;
     int ix = rand() % len;
-
-    cout << "Elem to search: " << arr[ix] << endl;
+    int x = arr[ix] + 1;
+    cout << "Elem to search: " << x << endl;
 
     bool flg1, flg2, flg3=false, flg4=false;
-    flg1 = test_caller(arr,len,arr[ix], lower_bound_strict, "strict lower bound: ");
-    flg2 = test_caller(arr,len,arr[ix], lower_bound, "lower bound: ");
-    flg3 = test_caller(arr,len,arr[ix], upper_bound, "upper bound: ");
-    flg4 = test_caller(arr,len,arr[ix], upper_bound_strict, "strict upper bound: ");
+    flg1 = test_caller(arr,len,x,lower_bound_strict, "strict lower bound: ");
+    flg2 = test_caller(arr,len,x,lower_bound, "lower bound: ");
+    flg3 = test_caller(arr,len,x,upper_bound, "upper bound: ");
+    flg4 = test_caller(arr,len,x,upper_bound_strict, "strict upper bound: ");
 
     if (flg1 && flg2 && flg3 && flg4)
         cout << "all found !" << endl;
