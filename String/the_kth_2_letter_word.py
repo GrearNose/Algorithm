@@ -26,9 +26,10 @@ def the_kth_2_letter_word(two_letters, n1, n2, k, C=None,dbg=False):
        two_letters: a list or tuple of two different comparable elements;
        n1: num of two_letters[0] composing this word;
        n2: num of two_letters[1] composing this word;
-       k: an int to indicate the k-th word to find;
-       C:  the n-n matrix recording the combinatorial number with 
+       k:  an int to indicate the k-th word to find;
+       C:  a n-by-n matrix recording the combinatorial number with 
            index as the input to C(n,m).
+       dbg: a flag to print the debug info if set True.
        return: the k-th word in alphabet consisting of n1 two_letters[0]
                 and n2 two_letters[1].
     """
@@ -88,8 +89,6 @@ def the_kth_2_letter_word(two_letters, n1, n2, k, C=None,dbg=False):
             word[ix+1:] = [1]*((n-1)-(m-1)) + [0]*(m-1)
             break
     word = [two_letters[ix] for ix in word]
-
-    if dbg: print('the %d-th word in the dict: '%k0, word)
 
     return word
 
