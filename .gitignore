@@ -37,4 +37,5 @@ Array/build/*
 List/build/*
 Matrix/build/*
 String/build/*
+String/__pycache__/*
 Tree/build/*
