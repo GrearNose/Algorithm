@@ -7,8 +7,9 @@ def shortest_seq(seq,threshold,dbg=False):
        seq: the sequence to search;
        threshold: sum threshold;
        dbg: a flag to print the debug info.
-       return: a tuple (ix,len) where ix is the starting index of the found
-       sequnce and len the length of the subsequnce, if found; None otherwise.
+       return: a tuple (ix,len,sum) where ix is the starting index of the
+       found sequnce, len the length and the sum of the subsequnce, if found;
+       None otherwise.
     """
     assert None != seq
     assert None != threshold
