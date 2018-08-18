@@ -1,4 +1,4 @@
-from random import randint
+from random import randint,seed
 from time import time
 from collections import Counter
 
@@ -45,6 +45,7 @@ def test():
     arr = [0] * ln
     three_val = 'RGB'
     # three_val = [0,1,2]
+    seed(time)
     # arr = [randint(0,2) for _ in range(ln)]
     for i in range(ln):
         ix = randint(0,len(three_val)-1)
