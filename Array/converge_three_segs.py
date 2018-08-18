@@ -41,9 +41,15 @@ def converge_as_three_segs(arr,three_val):
             raise Exception("arr[%d] has value '%s' not in the given three_val: '%s'"%(c, str(arr[c]), str(three_val)))
 
 def test():
-    three_val = [0,1,2]
     ln = 23
-    arr = [randint(0,2) for _ in range(ln)]
+    arr = [0] * ln
+    three_val = 'RGB'
+    # three_val = [0,1,2]
+    # arr = [randint(0,2) for _ in range(ln)]
+    for i in range(ln):
+        ix = randint(0,len(three_val)-1)
+        arr[i] = three_val[ix]
+
     cnt0 = Counter(arr)
     print('original arr:')
     print(arr)
