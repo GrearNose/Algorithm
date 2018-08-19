@@ -3,7 +3,7 @@ from time import time
 
 
 def qsort1(arr,start=None,end=None):
-    """Exercise for the qsort algorithm.
+    """ Exercise for the implementation of quick sort algorithm.
         === Args ===
         arr: the array to sort;
         start: the starting index of the segment to sort;
@@ -50,7 +50,16 @@ def qsort1(arr,start=None,end=None):
 
 
 def qsort2(arr,start=None,end=None):
-    """Another implementation."""
+    """ Another implementation of quick sort.
+        algoritm:
+            traverse through the array by maintaining two segments
+            with the following property:
+                arr[:i+1] <= pivot
+                arr[i+1:j] > pivot
+            both i,j move from left to right, and j goes first,
+            when arr[j] is found, move i to i+1 and swap arr[i] and arr[j],
+            and at last, move the pivot arr[start] to arr[i].
+    """
     if None == start:
         start = 0
     if None == end:
@@ -78,7 +87,14 @@ def qsort2(arr,start=None,end=None):
 
 
 def qsort3(arr,start=None,end=None):
-    """A implementation from the textbook."""
+    """ A implementation from the textbook.
+        algorithm:
+            make an empty place in the array by extracting the pivot elem,
+            move elems arr[ix] to this empty place then arr[ix] will be the
+            new empty place, repeat this by moving elems alternately from
+            right end (when arr[ix]<pivot is found) and left end (when
+            arr[ix]>pivot is found).
+    """
     if None == start:
         start = 0
     if None == end:
