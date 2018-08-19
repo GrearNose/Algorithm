@@ -8,7 +8,7 @@ using namespace std;
 Find the greatest element smaller than a given value in a
 non-descendingly sorted array using binary search, and return its index.
 Args
-arr: a ascendly sorted array or vector;
+arr: a ascendingly sorted array or vector;
 len: number of elements in arr;
 val: the element to search in arr;
 return: index of the greatest elem < val if found, -1 otherwise.
@@ -169,7 +169,7 @@ int upper_bound(const T1 arr, int len, const T2 val)
 Find the strict upper bound of a value in a non-descendingly sorted array
 (i.e. the first elem > x) using binary search.
 Args
-arr: a ascendly sorted array or vector;
+arr: a ascendingly sorted array or vector;
 len: number of elements in arr;
 val: the element to search in arr;
 return: the index of the index of the first elem > val if found, -1 otherwise.
