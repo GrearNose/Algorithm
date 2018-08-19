@@ -21,24 +21,17 @@ int lower_bound_strict(const T1 arr, int len, const T2 val)
     else if (val > arr[len-1])
         return len-1;
 
-    int l = 0, h = len-1, m = 0, cnt = 0;
+    int l = 0, h = len-1, m = 0;
     while(l < h) // now arr[0] < x <= arr[-1].
     {
         m = (l + h) >> 1;
-
-        // printf("l,h,m: %d, %d, %d\n", l,h,m);
-        ++ cnt;
-        if (cnt > len)
-            break;
-        
         if (val > arr[m]) // ensure arr[l] < val always true.
         {
             if (l == m) // then l+1 == h, such that m = (l+h)/2 == l
-            {           // arr[l] < val <= arr[h], then l is the target.
-                h = m-1;
+            {           // arr[m]=arr[l] < val <= arr[h], then arr[m] is the target.
+                h = m;
                 break;
             }
-            // cout << "update l" << endl;
             l = m;
         }
         else // val <= arr[m]
@@ -76,21 +69,17 @@ int lower_bound(const T1 arr, int len, const T2 val)
     else if ( val > arr[len-1])
         return len-1;
 
-    int l = 0, h = len-1, m = 0, cnt = 0;
+    int l = 0, h = len-1, m = 0;
     while(l < h) // now arr[0] < x <= arr[-1].
     {
         m = (l + h) >> 1;
 
-        // printf("l,h,m: %d, %d, %d\n", l,h,m);
-        ++ cnt;
-        if (cnt > len)
-            break;
-        
         if (val > arr[m]) // ensure arr[l] < val always true.
         {
-            if (l == m) // then l+1 == h, such that (l+h)/2 == l
-            {
-                h = m-1;
+            if (l == m) // then l+1 == h, (l+h)/2 == l, dead loop if not deal with it.
+            {           // h = m is the greatest h value
+                        // that breaks the condition "val <= arr[h]".
+                h = m;
                 break;
             }
             l = m;
@@ -133,21 +122,20 @@ int upper_bound(const T1 arr, int len, const T2 val)
 {
     if (NULL==arr || len <= 0 || val > arr[len-1])
         return -1;
-    if (val <= arr[0])
-        return 0;
     if (val == arr[len-1])
         return len-1;
 
-    int l = 0, h = len-1, m, cnt = 0;
-    while(l < h)  // now arr[0] < x < arr[-1].
+    int l = 0, h = len-1, m;
+    while(l < h)  // now arr[0] <= x < arr[-1].
     {
         m = (l + h) >> 1;
-        // printf("l,h,m: %d, %d, %d\n", l,h,m);
-        ++ cnt;
-        if (cnt > len)
-            break;
+
         if (val < arr[m]) // ensure val < arr[h] always true.
+        {
             h = m;
+            if (arr[m-1] < val)
+                return h;
+        }
         else // arr[m] <= val
         {
             // need to increase l to find the least l
@@ -182,14 +170,11 @@ int upper_bound_strict(const T1 arr, int len, const T2 val)
     if (val < arr[0])
         return 0;
 
-    int l = 0, h = len-1, m, cnt = 0;
+    int l = 0, h = len-1, m;
     while(l < h)  // now arr[0] < x < arr[-1].
     {
         m = (l + h) >> 1;
-        // printf("l,h,m: %d, %d, %d\n", l,h,m);
-        ++ cnt;
-        if (cnt > len)
-            break;
+
         if (val < arr[m]) // ensure val < arr[h] always true.
             h = m;
         else // arr[m] <= val
@@ -209,11 +194,11 @@ bool test_caller(T*arr, int len, T val, int (*func)(T*,int, T), const string &ms
     if (NULL == arr || len <= 0 || func == NULL)
         return false;
 
-    cout << msg << endl;
+    cout << msg;
     int ix = (*func)(arr,len, val);
     if (ix > -1)
     {
-        cout << "arr[" << ix << "]: " << arr[ix] << endl;
+        cout << "arr[" << ix << "] = " << arr[ix] << endl;
         return true;
     }
     else
@@ -225,24 +210,31 @@ bool test_caller(T*arr, int len, T val, int (*func)(T*,int, T), const string &ms
 
 void test()
 {
-    int *arr, len = 13, min = 3, mx = 33;
+    int *arr, len = 13, min = 3, mx = 23;
     arr = new int[len];
     srand(time(NULL));
     for (int i = 0; i < len; ++i)
         arr[i] = min +  rand() % mx;
     sort(arr,arr+len);
+    cout << "arr: ";
     for (int i = 0; i < len; ++i)
         cout << arr[i] << " ";
     cout << endl;
-    int ix = rand() % len;
-    int x = arr[ix] + 1;
-    cout << "Elem to search: " << x << endl;
+    // use different cases for testing.
+    // int ix = rand() % len;
+    // int val = arr[ix] + 1;
+    // int val = arr[0];
+    // int val = arr[1];
+    // int val = arr[len-1];
+    // int val = arr[len-2];
+    int val =  min +  rand() % mx;
+    cout << "Value to search: " << val << endl;
 
     bool flg1, flg2, flg3=false, flg4=false;
-    flg1 = test_caller(arr,len,x,lower_bound_strict, "strict lower bound: ");
-    flg2 = test_caller(arr,len,x,lower_bound, "lower bound: ");
-    flg3 = test_caller(arr,len,x,upper_bound, "upper bound: ");
-    flg4 = test_caller(arr,len,x,upper_bound_strict, "strict upper bound: ");
+    flg1 = test_caller(arr,len,val,lower_bound_strict, "strict lower bound: ");
+    flg2 = test_caller(arr,len,val,lower_bound, "lower bound: ");
+    flg3 = test_caller(arr,len,val,upper_bound, "upper bound: ");
+    flg4 = test_caller(arr,len,val,upper_bound_strict, "strict upper bound: ");
 
     if (flg1 && flg2 && flg3 && flg4)
         cout << "all found !" << endl;
