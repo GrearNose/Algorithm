@@ -2,6 +2,14 @@ from random import randint, seed
 from time import time
 
 def search_matrix(arr,val):
+    """
+        Given a sorted matrix, i.e. arr[i][j] > max(arr[i-1][j],arr[i][j-1]),
+        and a value val, search it in this matrix.
+        === Args ===
+        arr   the matrix, a list of list of numbers;
+        val   the value to search, a number.
+        return a tuple (r,c) if arr[r][c]==val is found, None otherwise.
+    """
     if None == arr or None == val or 0 == len(arr):
         return None
     assert all([len(arr[0]) == len(row) for row in arr]) # all rows have same length.
