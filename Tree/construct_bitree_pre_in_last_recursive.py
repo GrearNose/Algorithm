@@ -2,8 +2,8 @@ class Node:
     """ definition of a node of a binary tree."""
     def __init__(self,d):
       self.data  = d
-      self.left  = None
-      self.right = None
+      self.lchild  = None
+      self.rchild = None
 
 def print_tree_horizontally(root, depth=0, isleft=None):
     """ Print a binary tree. 
@@ -25,8 +25,8 @@ def print_tree_horizontally(root, depth=0, isleft=None):
         print('rt:', end='')
 
     print(root.data)
-    print_tree_horizontally(root.left,depth+1, True)
-    print_tree_horizontally(root.right,depth+1,False)
+    print_tree_horizontally(root.lchild,depth+1, True)
+    print_tree_horizontally(root.rchild,depth+1,False)
 
 
 def reconstruct_tree_first_in(FirstAndIn):
@@ -40,8 +40,8 @@ def reconstruct_tree_first_in(FirstAndIn):
     left       = (First[1:ix+1], In[:ix])  # lchild subtree
     right      = (First[ix+1:], In[ix+1:]) # rchild subtree
     root       = Node(d)
-    root.left  = reconstruct_tree_first_in(left)
-    root.right = reconstruct_tree_first_in(right)
+    root.lchild= reconstruct_tree_first_in(left)
+    root.rchild= reconstruct_tree_first_in(right)
     return root
 
 def reconstruct_tree_last_in(LastAndIn):
@@ -55,8 +55,8 @@ def reconstruct_tree_last_in(LastAndIn):
     left       = (Last[:ix], In[:ix])      # lchild subtree
     right      = (Last[ix:-1], In[ix+1:])  # rchild subtree
     root       = Node(d)
-    root.left  = reconstruct_tree_last_in(left)
-    root.right = reconstruct_tree_last_in(right)
+    root.lchild= reconstruct_tree_last_in(left)
+    root.rchild= reconstruct_tree_last_in(right)
     return root
 
 
