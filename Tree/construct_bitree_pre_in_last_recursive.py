@@ -1,8 +1,8 @@
 class Node:
     """ definition of a node of a binary tree."""
     def __init__(self,d):
-      self.data  = d
-      self.lchild  = None
+      self.data   = d
+      self.lchild = None
       self.rchild = None
 
 def print_tree_horizontally(root, depth=0, isleft=None):
