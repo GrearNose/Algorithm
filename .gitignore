@@ -34,6 +34,7 @@
 # binary dirs
 Basic/build/*
 Array/build/*
+Array/__pycache__/*
 List/build/*
 Matrix/build/*
 String/build/*

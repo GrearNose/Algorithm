@@ -18,14 +18,17 @@ int lower_bound_strict(const T1 arr, int len, const T2 val)
 {
     if (NULL==arr || len <= 0 || val <= arr[0])
         return -1;
-    else if (val > arr[len-1])
+    if (arr[len-1] < val)
         return len-1;
+    if (1 == len)
+        return (arr[0] < val) ? 0 : -1;
 
     int l = 0, h = len-1, m = 0;
-    while(l < h) // now arr[0] < x <= arr[-1].
+    // now len >= 2, l < h, arr[0] < x <= arr[-1].
+    while(l < h)
     {
         m = (l + h) >> 1;
-        if (val > arr[m]) // ensure arr[l] < val always true.
+        if (arr[m] < val) // ensure arr[l] < val always true.
         {
             if (l == m) // then l+1 == h, such that m = (l+h)/2 == l
             {           // arr[m]=arr[l] < val <= arr[h], then arr[m] is the target.
@@ -66,15 +69,18 @@ int lower_bound(const T1 arr, int len, const T2 val)
     if (NULL==arr || len <= 0 || val < arr[0])
         return -1;
     // not use '=' here in order to find the index of the first satifying elem.
-    else if ( val > arr[len-1])
+    if (arr[len-1] <= val)
         return len-1;
+    if (1 == len)
+        return (arr[0] <= val) ? 0 : -1;
 
     int l = 0, h = len-1, m = 0;
-    while(l < h) // now arr[0] < x <= arr[-1].
+    // now len >= 2, l < h, arr[0] < x <= arr[-1].
+    while(l < h)
     {
         m = (l + h) >> 1;
 
-        if (val > arr[m]) // ensure arr[l] < val always true.
+        if (arr[m] < val) // ensure arr[l] < val always true.
         {
             if (l == m) // then l+1 == h, (l+h)/2 == l, dead loop if not deal with it.
             {           // h = m is the greatest h value
@@ -101,7 +107,7 @@ int lower_bound(const T1 arr, int len, const T2 val)
     // thus now, arr[h] < val <= arr[h+1], and arr[h+1] is the
     // (first if more than one) greatest lower bound.
     if (arr[h+1] == val)
-        return h + 1; // arr[h+1] is the first one of the greatest lower bound.
+        return h + 1;// arr[h+1] is the first one of the greatest lower bound.
     else             // N.B. in this case, arr[l] == arr[h] < x < arr[h+1]
         return h;    // arr[h] is the greatest lower bound.
 }
@@ -122,11 +128,15 @@ int upper_bound(const T1 arr, int len, const T2 val)
 {
     if (NULL==arr || len <= 0 || val > arr[len-1])
         return -1;
+    // cannot use val <= arr[len-1] here, as there might be smaller upper bound.
     if (val == arr[len-1])
         return len-1;
+    if (val <= arr[0] || 1 == len)
+        return (val <= arr[0]) ? 0 : -1;
 
     int l = 0, h = len-1, m;
-    while(l < h)  // now arr[0] <= x < arr[-1].
+    // now len >= 2, l < h, arr[0] < x <= arr[-1].
+    while(l < h)
     {
         m = (l + h) >> 1;
 
@@ -145,7 +155,7 @@ int upper_bound(const T1 arr, int len, const T2 val)
         }
     }
     // now l == h, arr[l-1] <= x < arr[l], arr[l-1] is
-    // the last one satisfying the lower bound condition.
+    // the last one satisfying the lower bound condition if l-1 is valid.
     if (arr[l-1] == val) // arr[l-1] is the last one in the least upper bound.
         return l-1;
     else           // N.B. arr[l-1] < x < arr[l], 
@@ -167,11 +177,12 @@ int upper_bound_strict(const T1 arr, int len, const T2 val)
 {
     if (NULL==arr || len <= 0 || val >= arr[len-1])
         return -1;
-    if (val < arr[0])
-        return 0;
+    if (val < arr[0] || 1 == len)
+        return (val < arr[0]) ? 0 : -1;
 
     int l = 0, h = len-1, m;
-    while(l < h)  // now arr[0] < x < arr[-1].
+    // now len >= 2, l < h, arr[0] < x <= arr[-1].
+    while(l < h)
     {
         m = (l + h) >> 1;
 
@@ -210,7 +221,12 @@ bool test_caller(T*arr, int len, T val, int (*func)(T*,int, T), const string &ms
 
 void test()
 {
-    int *arr, len = 13, min = 3, mx = 23;
+    int *arr;
+    // int len = 1;
+    int len = 2;
+    // int len = 3;
+    // int len = 4;
+    int min = 3, mx = 23;
     arr = new int[len];
     srand(time(NULL));
     for (int i = 0; i < len; ++i)
