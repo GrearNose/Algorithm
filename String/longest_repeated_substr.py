@@ -8,7 +8,7 @@ def len_common_prefix(s,t):
     for i in range(ln):
         if s[i] != t[i]:
             return i
-    return 0
+    return ln
 
 def longest_repeated_substr(s):
     """
@@ -22,6 +22,8 @@ def longest_repeated_substr(s):
     for i in ix_suffix_str: print(i,s[i:])
     ix, ln_max = None, 0
     for i in range(len(ix_suffix_str)-1):
+        # compare two adjacent suffix each time, as for one suffix, the one
+        # most similar to it is either the previous one or the next one.
         p, q = ix_suffix_str[i],ix_suffix_str[i+1]
         ln = len_common_prefix(s[p:],s[q:])
         # print(p,q,ln)
