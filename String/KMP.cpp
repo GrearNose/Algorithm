@@ -62,7 +62,21 @@ void get_next(const char p[], const int len, int next_pos[])
     }
 }
 
-int str_find(const char s[], const char p[], bool debug=false)
+
+/*
+    Find the starting index of the first occurence of pattern string in the main
+    string s.
+    Args:
+    s: the main string;
+    p: the pattern string;
+    debug: flag to print debug info;
+    search_time: var to record the number of comparision
+           of the searching procedure.
+    return: the starting index of the first occurence of p in s if found,
+          -1 otherwise.
+*/
+int str_find(const char s[], const char p[], 
+    bool debug=false, int*search_time = NULL)
 {
     if (NULL == s || NULL == p)
         return -1;
@@ -83,8 +97,9 @@ int str_find(const char s[], const char p[], bool debug=false)
         for (int i = 0; i < ln_p; ++i)
             printf("%d ", next_pos[i]);
         printf("\n");
-        return 0;
     }
+    if (NULL != search_time)
+        *search_time = 0;
 
     i = j = 0;
     while(i < ln_s && j < ln_p)
@@ -98,7 +113,12 @@ int str_find(const char s[], const char p[], bool debug=false)
             ++ i;
         else
             j = next_pos[j];
+
+        if (NULL != search_time)
+            ++ (*search_time);
     }
+    if (debug)
+        printf("i,j: %d,%d\n", i,j);
 
     if (j == ln_p)
         return i-j;
@@ -163,8 +183,21 @@ bool str_equal(const char *s, const char *t)
     return false;
 }
 
+void str_match_cnt()
+{
+    const char *s = "ababcabcacbab";
+    const char *t = "abcac";
+    int ix,cnt;
+    ix = str_find(s,t, true, &cnt);
+    // cout << endl << i;
+    printf("s: %s\n", s);
+    printf("t: %s\n", t);
+    printf("ix: %d\n", ix);
+    printf("cnt: %d\n", cnt);
+}
+
 int main(int argc, char const *argv[])
 {
-    test();
+    str_match_cnt();
     return 0;
 }
