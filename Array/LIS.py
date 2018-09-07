@@ -1,4 +1,7 @@
 
+from random import seed, randint
+from time import time
+
 def lis(arr):
     """ Find out the LIS(longest increasing subsequence) of an array,
         using a DP algorithm with complexity of o(nlogn).
@@ -60,15 +63,17 @@ def lis(arr):
             # B[l] is the smallest elem in B larger than x.
             if None == ix:
                 ix = l
-            # update them only when a smallest B[ix] > x is found,
-            # otherwise, B[ix] == x, not need to update.
-            if x < B[ix]:
-                # B[ix] is the ending elem of the sequence of length ix+1.
-                B[ix] = x
-                # update the corresponding subsequence in the subLIS.
-                # N.B. subLIS[ix+1] is the LIS of length ix+1.
-                subLIS[ix+1][-1] = x
-
+                # update them only when a smallest B[ix] > x is found,
+                # otherwise, B[ix] == x, not need to update.
+                if x < B[ix]:
+                    # B[ix] is the ending elem of the sequence of length ix+1.
+                    B[ix] = x
+                    # update the corresponding subsequence in the subLIS.
+                    # N.B. subLIS[ix+1] is the LIS of length ix+1.
+                    # make a new subLIS by appending x to the subLIS of length ix.
+                    # rather than replace the last elem of subLIS[ix+1] with x,
+                    # which may cause incorrect result when subLIS[ix+1][-2] > x.
+                    subLIS[ix+1] = subLIS[ix][:] + [x]
     # extract the longest LIS.
     mxLen = list(subLIS.keys())[-1]
     subLIS = subLIS[mxLen]
@@ -76,15 +81,17 @@ def lis(arr):
     return B,subLIS
 
 def test():
-    arr = [[2, 1, 5, 3, 6, 4, 8 ,9, 7],\
-            [2, 3, 5, 2, 1, 7, 3, 8, 5, 9],
-            [10, 17, 4, 19, 14, 2, 10, 6, 17, 10]]
-    for a in arr:
-        B,LIS = lis(a)
-        print('arr:',a)
-        print("B:",B)
-        print("LIS:",LIS)
-        print()
+    # arr = [[2, 1, 5, 3, 6, 4, 8 ,9, 7],\
+    #         [2, 3, 5, 2, 1, 7, 3, 8, 5, 9],
+    #         [10, 17, 4, 19, 14, 2, 10, 6, 17, 10]]
+    mn,mx,ln = 1,13,10
+    seed(time())
+    a = [randint(mn,mx) for _ in range(ln)]
+    B,LIS = lis(a)
+    print('arr:',a)
+    # print("B:",B)
+    print("LIS:",LIS)
+    print()
 
 if __name__ == '__main__':
     test()
